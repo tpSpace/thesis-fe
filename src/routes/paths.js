@@ -39,7 +39,8 @@ export const PATH_APP = {
       root: path(ROOTS_APP, '/assignment/assigned'),
       all: path(ROOTS_APP, '/assignment/assigned/all'),
       view: (assignmentId) => path(ROOTS_APP, `/assignment/assigned/${assignmentId}`),
-      question: (assignmentId) => path(ROOTS_APP, `/assignment/assigned/${assignmentId}/question`)
+      question: (assignmentId) => path(ROOTS_APP, `/assignment/assigned/${assignmentId}/question`),
+      localizationReport: (assignmentId) => path(ROOTS_APP, `/assignment/assigned/${assignmentId}/localization-report`) // Add this line
     }
   },
   analyzer: {
