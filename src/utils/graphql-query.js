@@ -306,5 +306,14 @@ export const ANALYZER_BYID_QUERY = gql`
     }
 `;
 
-
-
+export const LOCALIZATIONREPORT_BYASSIGNMENTID_QUERY = gql`
+    query getAllLocalizationReportsByAssignmentId($studentAssignmentId: Int!) {
+        getAllLocalizationReportsByAssignmentId(studentAssignmentId: $studentAssignmentId) {
+            id
+            location
+            score
+            lineNumber
+            studentAssignmentId
+        }
+    }
+`;

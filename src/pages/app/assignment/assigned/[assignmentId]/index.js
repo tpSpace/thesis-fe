@@ -51,7 +51,7 @@ export default function AssignmentAssignedAssignmentIdIndex() {
         push(PATH_APP.user.view(id));
     };
 
-    const isShowViewQuestion = () => {
+    const isShowViewQuestionandReport = () => {
         const status = currentStudentAssignment.status.toLowerCase();
         return status !== 'assigned' && status !== 'submitted';
     };
@@ -69,18 +69,22 @@ export default function AssignmentAssignedAssignmentIdIndex() {
                     ]}
                     action={
                         <Box display="flex" gap={2}>
-                            {isShowViewQuestion() && (
-                                <NextLink href={PATH_APP.assignment.assigned.question(assignmentId)} passHref>
-                                    <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                                        View Question
-                                    </Button>
-                                </NextLink>
+                            {isShowViewQuestionandReport() && (
+                                <>
+                                    <NextLink href={PATH_APP.assignment.assigned.question(assignmentId)} passHref>
+                                        <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
+                                            View Question
+                                        </Button>
+                                    </NextLink>
+
+                                    <NextLink href={PATH_APP.assignment.assigned.localizationReport(assignmentId)} passHref>
+                                        <Button variant="contained" startIcon={<Iconify icon={'eva:file-text-fill'} />}>
+                                            Bug Report
+                                        </Button>
+                                    </NextLink>
+                                </>
                             )}
-                            <NextLink href={PATH_APP.assignment.assigned.localizationReport(assignmentId)} passHref>
-                                <Button variant="contained" startIcon={<Iconify icon={'eva:file-text-fill'} />}>
-                                    Localization Report
-                                </Button>
-                            </NextLink>
+
                         </Box>
                     }
                 />
