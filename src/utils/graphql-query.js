@@ -317,3 +317,15 @@ export const LOCALIZATIONREPORT_BYASSIGNMENTID_QUERY = gql`
         }
     }
 `;
+
+export const EXECUTEDTEST_BYASSIGNMENTID_QUERY = gql`
+    query getAllExecutedTestsByAssignmentId($studentAssignmentId: Int!) {
+        getAllExecutedTestsByAssignmentId(studentAssignmentId: $studentAssignmentId){
+            id
+            executedTest
+            isFailing
+            studentAssignmentId
+        }
+    }
+
+`
