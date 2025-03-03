@@ -19,14 +19,12 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = createHttpLink({
-  uri:
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:4000/graphql"
-      : "http://localhost:4000/graphql",
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
   credentials: "include",
 });
 
 const authLink = setContext((_, { headers }) => {
+  if (typeof window === "undefined") return { headers }; // SSR guard
   const accessToken = window.localStorage.getItem("accessToken");
   return {
     headers: {
@@ -37,8 +35,13 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(ApolloLink.from([errorLink, httpLink])),
+  link: ApolloLink.from([errorLink, authLink, httpLink]),
   cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: "cache-and-network",
+    },
+  },
 });
 
 export default client;

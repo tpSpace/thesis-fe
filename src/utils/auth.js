@@ -1,17 +1,5 @@
-const isAdmin = (user) => {
-    return user.role.id == 1;
-};
+const isAdmin = (user) => user.role.id === 1;
+const isTeacher = (user) => user.role.id === 2;
+const isStudent = (user) => user.role.id === 3;
 
-const isTeacher = (user) => {
-    return user.role.id == 2;
-}
-
-const isStudent = (user) => {
-    return user.role.id == 3;
-}
-
-module.exports = {
-    isAdmin,
-    isTeacher,
-    isStudent
-}
+export { isAdmin, isTeacher, isStudent };
