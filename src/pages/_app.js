@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "react-lazy-load-image-component/src/effects/opacity.css";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
-import "react-quill/dist/quill.snow.css";
+import "react-quill-new/dist/quill.snow.css";
 import PropTypes from "prop-types";
 import Head from "next/head";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";

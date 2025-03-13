@@ -114,7 +114,8 @@ export default function CourseNewEditForm({ isEdit = false, currentCourse }) {
   };
 
   if (loading) return <LoadingScreen />;
-
+  if (error) return <div>Error loading instructors</div>;
+  if (!instructors?.allUser) return <div>No instructors found</div>;
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>

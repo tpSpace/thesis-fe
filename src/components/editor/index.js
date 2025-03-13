@@ -10,7 +10,7 @@ import { Box } from '@mui/material';
 import EditorToolbar, { formats } from './EditorToolbar';
 
 
-const ReactQuill = dynamic(() => import('react-quill'), {
+const ReactQuill = dynamic(() => import('react-quill-new'), {
   ssr: false,
   loading: () => (
     <Box
