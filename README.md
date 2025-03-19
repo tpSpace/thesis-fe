@@ -11,11 +11,11 @@ git clone https://github.com/tpSpace/lcasystem-FE
 2. Build image
 
 ```bash
-docker build -t nextjs-bun .
+ docker build -t lcasystem-fe:latest .
 ```
 
 3. Run the container
 
 ```bash
-docker run -p 3000:3000 nextjs-bun
+docker run -p 3000:3000 lcasystem-fe:latest
 ```
