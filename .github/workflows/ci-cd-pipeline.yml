@@ -70,7 +70,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/tpspace/thesis-fe:latest
+            ghcr.io/tpspace/thesis-fe:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
