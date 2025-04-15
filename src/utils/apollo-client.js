@@ -19,7 +19,10 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
+  uri:
+    typeof window === "undefined"
+      ? process.env.NEXT_PUBLIC_GRAPHQL_URI // Server-side (inside Kubernetes)
+      : "/api/graphql", // Client-side (browser will use relative URL)
   credentials: "include",
 });
 
