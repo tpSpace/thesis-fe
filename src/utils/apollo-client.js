@@ -7,7 +7,8 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { isValidToken } from "./jwt";
-
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     console.log("graphQLErrors: ", graphQLErrors);
@@ -18,10 +19,10 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_URI || "/api/graphql",
+  uri: publicRuntimeConfig.NEXT_PUBLIC_GRAPHQL_URI || "/api/graphql",
   credentials: "include",
 });
-console.log(" env ", process.env.NEXT_PUBLIC_GRAPHQL_URI);
+console.log(" env ", publicRuntimeConfig.NEXT_PUBLIC_GRAPHQL_URI);
 
 const authLink = setContext((_, { headers }) => {
   if (typeof window === "undefined") return { headers }; // SSR guard

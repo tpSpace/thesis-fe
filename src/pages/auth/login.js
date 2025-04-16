@@ -14,7 +14,7 @@ const RootStyle = styled("div")(({ theme }) => ({
     display: "flex",
   },
 }));
-
+console.log(" env ", process.env.NEXT_PUBLIC_GRAPHQL_URI);
 const HeaderStyle = styled("header")(({ theme }) => ({
   top: 0,
   zIndex: 9,
