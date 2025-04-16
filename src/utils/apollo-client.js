@@ -8,7 +8,10 @@ import {
 import { onError } from "@apollo/client/link/error";
 import { isValidToken } from "./jwt";
 import getConfig from "next/config";
-const { publicRuntimeConfig } = getConfig();
+
+// Only import publicRuntimeConfig on the client-side
+const { publicRuntimeConfig } = getConfig() || { publicRuntimeConfig: {} };
+
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     console.log("graphQLErrors: ", graphQLErrors);
