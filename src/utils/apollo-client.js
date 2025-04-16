@@ -21,6 +21,7 @@ const httpLink = createHttpLink({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_URI || "/api/graphql",
   credentials: "include",
 });
+console.log(" env ", process.env.NEXT_PUBLIC_GRAPHQL_URI);
 
 const authLink = setContext((_, { headers }) => {
   if (typeof window === "undefined") return { headers }; // SSR guard
