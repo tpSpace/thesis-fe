@@ -18,11 +18,12 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
+  uri: process.env.BACKEND_PORT,
   credentials: "include",
 });
 console.log("httpLink: ", httpLink);
 console.log(process.env.NEXT_PUBLIC_GRAPHQL_URI);
+console.log(proces.env.BACKEND_PORT);
 const authLink = setContext((_, { headers }) => {
   if (typeof window === "undefined") return { headers }; // SSR guard
   const accessToken = window.localStorage.getItem("accessToken");
