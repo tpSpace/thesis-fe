@@ -18,6 +18,7 @@ export default async function handler(req, res) {
         if (!ingress) throw new Error("LoadBalancer IP not yet assigned");
         const publicEndpoint = ingress.ip || ingress.hostname;
         const backendUrl = `http://${publicEndpoint}:4000`;
+        console.log("Backend URL:", backendUrl);
         return res.status(200).json({ backendUrl });
       } catch (err) {
         if (i === maxRetries - 1) throw err;
