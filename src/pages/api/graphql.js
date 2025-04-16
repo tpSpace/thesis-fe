@@ -8,7 +8,7 @@ export const config = {
 };
 
 const apiProxy = createProxyMiddleware({
-  target: "http://backend:4000",
+  target: "http://backend.my-thesis.svc.cluster.local:4000",
   changeOrigin: true,
   pathRewrite: { "^/api/graphql": "/graphql" },
   onError: (err, req, res) => {
