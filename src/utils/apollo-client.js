@@ -1,4 +1,3 @@
-import React from "react";
 import { setContext } from "@apollo/client/link/context";
 import {
   ApolloClient,
@@ -19,10 +18,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = createHttpLink({
-  uri:
-    typeof window === "undefined"
-      ? process.env.NEXT_PUBLIC_GRAPHQL_URI // Server-side (inside Kubernetes)
-      : "/api/graphql", // Client-side (browser will use relative URL)
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
   credentials: "include",
 });
 
