@@ -23,7 +23,7 @@ const httpLink = createHttpLink({
 });
 console.log("httpLink: ", httpLink);
 console.log(process.env.NEXT_PUBLIC_GRAPHQL_URI);
-console.log(proces.env.BACKEND_PORT);
+console.log(process.env.BACKEND_PORT);
 const authLink = setContext((_, { headers }) => {
   if (typeof window === "undefined") return { headers }; // SSR guard
   const accessToken = window.localStorage.getItem("accessToken");
