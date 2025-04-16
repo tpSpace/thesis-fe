@@ -9,9 +9,12 @@ import { onError } from "@apollo/client/link/error";
 import { isValidToken } from "./jwt";
 import getConfig from "next/config";
 
-// Only import publicRuntimeConfig on the client-side
-const { publicRuntimeConfig } = getConfig() || { publicRuntimeConfig: {} };
-
+// Only runs on client-side
+const runtimeConfig =
+  typeof window !== "undefined"
+    ? getConfig()
+    : { publicRuntimeConfig: { NEXT_PUBLIC_GRAPHQL_URI: "/api/graphql" } };
+const { publicRuntimeConfig } = runtimeConfig;
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     console.log("graphQLErrors: ", graphQLErrors);
