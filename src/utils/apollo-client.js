@@ -21,6 +21,7 @@ const httpLink = createHttpLink({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
   credentials: "include",
 });
+console.log("httpLink: ", httpLink);
 
 const authLink = setContext((_, { headers }) => {
   if (typeof window === "undefined") return { headers }; // SSR guard
