@@ -22,7 +22,7 @@ const httpLink = createHttpLink({
   credentials: "include",
 });
 console.log("httpLink: ", httpLink);
-
+console.log(process.env.NEXT_PUBLIC_GRAPHQL_URI);
 const authLink = setContext((_, { headers }) => {
   if (typeof window === "undefined") return { headers }; // SSR guard
   const accessToken = window.localStorage.getItem("accessToken");
