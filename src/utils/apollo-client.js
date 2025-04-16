@@ -18,7 +18,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: process.env.BACKEND_PORT,
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_URI + "/graphql",
   credentials: "include",
 });
 console.log("httpLink: ", httpLink);
