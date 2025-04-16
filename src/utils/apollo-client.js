@@ -9,18 +9,21 @@ import { onError } from "@apollo/client/link/error";
 import { isValidToken } from "./jwt";
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) console.log("graphQLErrors: ", graphQLErrors);
-  if (networkError) console.log("networkError: ", networkError);
+  if (graphQLErrors) {
+    console.log("graphQLErrors: ", graphQLErrors);
+  }
+  if (networkError) {
+    console.log("networkError: ", networkError);
+  }
 });
 
-// Placeholder URI; will be overridden
 const httpLink = createHttpLink({
-  uri: "http://placeholder:4000/graphql",
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
   credentials: "include",
 });
 
 const authLink = setContext((_, { headers }) => {
-  if (typeof window === "undefined") return { headers };
+  if (typeof window === "undefined") return { headers }; // SSR guard
   const accessToken = window.localStorage.getItem("accessToken");
   return {
     headers: {
@@ -30,33 +33,12 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// Function to create Apollo Client with dynamic URI
-export async function createApolloClient() {
-  let backendUrl =
-    process.env.NEXT_PUBLIC_GRAPHQL_URI || "http://placeholder:4000";
-  try {
-    const res = await fetch("/api/backend-url");
-    const { backendUrl: fetchedUrl } = await res.json();
-    if (fetchedUrl) backendUrl = fetchedUrl;
-  } catch (err) {
-    console.error("Failed to fetch backend URL:", err);
-  }
-
-  const dynamicHttpLink = createHttpLink({
-    uri: `${backendUrl}/graphql`,
-    credentials: "include",
-  });
-
-  return new ApolloClient({
-    link: ApolloLink.from([errorLink, authLink, dynamicHttpLink]),
-    cache: new InMemoryCache(),
-    defaultOptions: {
-      watchQuery: {
-        fetchPolicy: "cache-and-network",
-      },
+const client = new ApolloClient({
+  link: ApolloLink.from([errorLink, authLink, httpLink]),
+  cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: "cache-and-network",
     },
-  });
-}
-
-// Export a promise-based client for use in components
-export default createApolloClient();
+  },
+});
