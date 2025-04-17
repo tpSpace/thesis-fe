@@ -13,7 +13,11 @@ import getConfig from "next/config";
 const runtimeConfig =
   typeof window !== "undefined"
     ? getConfig()
-    : { publicRuntimeConfig: { NEXT_PUBLIC_GRAPHQL_URI: "/api/graphql" } };
+    : {
+        publicRuntimeConfig: {
+          NEXT_PUBLIC_GRAPHQL_URI: "http://34.92.234.88:4000/graphql",
+        },
+      };
 const { publicRuntimeConfig } = runtimeConfig;
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
@@ -25,7 +29,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: publicRuntimeConfig.NEXT_PUBLIC_GRAPHQL_URI || "/api/graphql",
+  uri: "http://34.92.234.88:4000/graphql",
   credentials: "include",
 });
 console.log(" env ", publicRuntimeConfig.NEXT_PUBLIC_GRAPHQL_URI);
