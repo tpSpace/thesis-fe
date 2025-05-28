@@ -31,7 +31,7 @@ COPY package*.json ./
 ENV NODE_ENV=production
 # This declares the environment variable. Kubernetes will provide its actual value at runtime.
 # An empty value here is fine as it will be overridden.
-ENV NEXT_PUBLIC_BACKEND_URL=
+ENV NEXT_PUBLIC_GRAPHQL_URI=
 
 # Install production dependencies (Bun automatically skips devDependencies)
 RUN bun install 
