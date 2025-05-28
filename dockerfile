@@ -14,6 +14,9 @@ RUN bun install
 COPY . .
 
 # Build the Next.js application
+# NEXT_PUBLIC_ variables available at build time would be embedded here.
+# Since we want runtime, this build will not embed NEXT_PUBLIC_BACKEND_URL
+# unless it's already set in the CI/build environment for some other reason.
 RUN bun run build
 
 # Production stage
@@ -26,6 +29,9 @@ COPY package*.json ./
 
 # Set environment variables
 ENV NODE_ENV=production
+# This declares the environment variable. Kubernetes will provide its actual value at runtime.
+# An empty value here is fine as it will be overridden.
+ENV NEXT_PUBLIC_BACKEND_URL=
 
 # Install production dependencies (Bun automatically skips devDependencies)
 RUN bun install 
@@ -38,4 +44,5 @@ COPY --from=builder /app/public ./public
 EXPOSE 3000
 
 # Command to run the application
+# 'bun start' (which typically runs 'next start') will pick up runtime environment variables.
 CMD ["bun", "start"]
