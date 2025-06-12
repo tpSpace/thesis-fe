@@ -15,7 +15,7 @@ const runtimeConfig =
     ? getConfig()
     : {
         publicRuntimeConfig: {
-          NEXT_PUBLIC_GRAPHQL_URI: "http://34.96.244.61:4000/graphql",
+          NEXT_PUBLIC_GRAPHQL_URI: process.env.NEXT_PUBLIC_GRAPHQL_URI,
         },
       };
 const { publicRuntimeConfig } = runtimeConfig;
@@ -29,7 +29,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: "http://34.96.244.61:4000/graphql",
+  uri: publicRuntimeConfig.NEXT_PUBLIC_GRAPHQL_URI,
   credentials: "include",
 });
 console.log(" env ", publicRuntimeConfig.NEXT_PUBLIC_GRAPHQL_URI);
