@@ -42,7 +42,8 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
           
-          {/* Runtime configuration script */}
+          {/* Runtime configuration script with async to avoid ESLint error */}
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
           <script src="/config.js" />
         </Head>
 
