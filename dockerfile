@@ -13,6 +13,10 @@ RUN bun install
 # Copy all source files
 COPY . .
 
+# Build argument for the GraphQL URI
+ARG NEXT_PUBLIC_GRAPHQL_URI
+ENV NEXT_PUBLIC_GRAPHQL_URI=$NEXT_PUBLIC_GRAPHQL_URI
+
 # Build the Next.js application
 # NEXT_PUBLIC_ variables available at build time would be embedded here.
 # Since we want runtime, this build will not embed NEXT_PUBLIC_BACKEND_URL
@@ -40,8 +44,15 @@ RUN bun install
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
+# Copy the entrypoint script
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
 # Expose the default Next.js port
 EXPOSE 3000
+
+# Use the entrypoint script
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Command to run the application
 # 'bun start' (which typically runs 'next start') will pick up runtime environment variables.
