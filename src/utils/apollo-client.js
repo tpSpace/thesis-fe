@@ -9,16 +9,32 @@ import { onError } from "@apollo/client/link/error";
 import { isValidToken } from "./jwt";
 import getConfig from "next/config";
 
-// Only runs on client-side
-const runtimeConfig =
-  typeof window !== "undefined"
-    ? getConfig()
-    : {
-        publicRuntimeConfig: {
-          NEXT_PUBLIC_GRAPHQL_URI: process.env.NEXT_PUBLIC_GRAPHQL_URI,
-        },
-      };
-const { publicRuntimeConfig } = runtimeConfig;
+// Function to get GraphQL URI with runtime config support
+const getGraphQLUri = () => {
+  // First, try to get from runtime config (for client-side)
+  if (typeof window !== "undefined" && window.__RUNTIME_CONFIG__) {
+    const runtimeUri = window.__RUNTIME_CONFIG__.NEXT_PUBLIC_GRAPHQL_URI;
+    if (runtimeUri && runtimeUri !== '__NEXT_PUBLIC_GRAPHQL_URI__') {
+      console.log("Using runtime GraphQL URI:", runtimeUri);
+      return runtimeUri;
+    }
+  }
+  
+  // Fallback to Next.js config
+  const runtimeConfig =
+    typeof window !== "undefined"
+      ? getConfig()
+      : {
+          publicRuntimeConfig: {
+            NEXT_PUBLIC_GRAPHQL_URI: process.env.NEXT_PUBLIC_GRAPHQL_URI,
+          },
+        };
+  const { publicRuntimeConfig } = runtimeConfig;
+  
+  console.log("Using build-time GraphQL URI:", publicRuntimeConfig.NEXT_PUBLIC_GRAPHQL_URI);
+  return publicRuntimeConfig.NEXT_PUBLIC_GRAPHQL_URI || 'http://34.150.46.153/api/graphql';
+};
+
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     console.log("graphQLErrors: ", graphQLErrors);
@@ -29,10 +45,10 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: publicRuntimeConfig.NEXT_PUBLIC_GRAPHQL_URI,
+  uri: getGraphQLUri(),
   credentials: "include",
 });
-console.log(" env ", publicRuntimeConfig.NEXT_PUBLIC_GRAPHQL_URI);
+console.log("GraphQL URI:", getGraphQLUri());
 
 const authLink = setContext((_, { headers }) => {
   if (typeof window === "undefined") return { headers }; // SSR guard
