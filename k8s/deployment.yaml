@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: my-thesis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/tpspace/thesis-fe:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NEXT_PUBLIC_GRAPHQL_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: NEXT_PUBLIC_GRAPHQL_URI
+            - name: BACKEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: BACKEND_URL
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+      imagePullSecrets:
+        - name: ghcr-secret
