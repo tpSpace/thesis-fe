@@ -79,7 +79,7 @@ export default function Login() {
           {mdUp && (
             <SectionStyle>
               <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-                Hi, Welcome Back
+                Hi, Welcome Back sir
               </Typography>
             </SectionStyle>
           )}
@@ -100,7 +100,7 @@ export default function Login() {
 
               {!smUp && (
                 <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                  Don’t have an account?{" "}
+                  Don't have an account?{" "}
                   <NextLink href={PATH_AUTH.register} passHref>
                     <Link variant="subtitle2">Get started</Link>
                   </NextLink>
