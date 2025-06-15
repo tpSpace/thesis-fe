@@ -8,13 +8,13 @@
 git clone https://github.com/tpSpace/lcasystem-FE
 ```
 
-2. Build image
+1. Build image
 
 ```bash
  docker build -t lcasystem-fe:latest .
 ```
 
-3. Run the container
+1. Run the container
 
 ```bash
 docker run -p 3000:3000 lcasystem-fe:latest
