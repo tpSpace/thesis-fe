@@ -100,7 +100,7 @@ export default function Login() {
 
               {!smUp && (
                 <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <NextLink href={PATH_AUTH.register} passHref>
                     <Link variant="subtitle2">Get started</Link>
                   </NextLink>
